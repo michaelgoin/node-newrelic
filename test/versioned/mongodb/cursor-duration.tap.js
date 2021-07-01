@@ -56,6 +56,7 @@ tap.test('cursor duration tests', function(t) {
         const mongoTime = segment.parent.getExclusiveDurationInMillis()
         const parentTime = segment.parent.parent.getExclusiveDurationInMillis()
         console.log(`mongoName: ${segment.parent.name}, parentName: ${segment.parent.parent.name}, cbName: ${segment.name}`)
+        console.log('parentduration', segment.parent.parent.getDurationInMillis())
         console.log('child count: ', segment.parent.parent.children.length)
         console.log('mongoTime', mongoTime, 'parentTime', parentTime, 'cbTime', cbTime)
         t.ok(mongoTime > parentTime, 'toArray duration should be longer than its parent')
@@ -73,8 +74,9 @@ tap.test('cursor duration tests', function(t) {
       // asserts the toArray promise execution is longer than its parent
       // see https://github.com/newrelic/node-newrelic/issues/788
       const parentTime = segment.getExclusiveDurationInMillis()
+      const parentDuration = segment.getDurationInMillis()
       const mongoTime = segment.children[0].getExclusiveDurationInMillis()
-      console.log('mongoTime', mongoTime, 'parentTime', parentTime)
+      console.log('mongoTime', mongoTime, 'parentTime', parentTime, 'parentDuration', parentDuration)
       console.log('child count: ', segment.children.length)
       t.ok(mongoTime > parentTime, 'toArray promise duration should be longer than its parent')
 
