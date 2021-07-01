@@ -56,6 +56,7 @@ tap.test('cursor duration tests', function(t) {
         const mongoTime = segment.parent.getExclusiveDurationInMillis()
         const parentTime = segment.parent.parent.getExclusiveDurationInMillis()
         console.log(`mongoName: ${segment.parent.name}, parentName: ${segment.parent.parent.name}, cbName: ${segment.name}`)
+        console.log('child count: ', segment.parent.parent.children.length)
         console.log('mongoTime', mongoTime, 'parentTime', parentTime, 'cbTime', cbTime)
         t.ok(mongoTime > parentTime, 'toArray duration should be longer than its parent')
         t.notOk(err)
@@ -74,6 +75,7 @@ tap.test('cursor duration tests', function(t) {
       const parentTime = segment.getExclusiveDurationInMillis()
       const mongoTime = segment.children[0].getExclusiveDurationInMillis()
       console.log('mongoTime', mongoTime, 'parentTime', parentTime)
+      console.log('child count: ', segment.children.length)
       t.ok(mongoTime > parentTime, 'toArray promise duration should be longer than its parent')
 
       t.equal(data[0].i, 0)
