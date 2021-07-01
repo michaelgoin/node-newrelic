@@ -51,6 +51,7 @@ tap.test('cursor duration tests', function(t) {
     helper.runInTransaction(agent, function(transaction) {
       console.log('root duration: ', transaction.trace.root.getDurationInMillis())
       collection.find({}).toArray(function onToArray(err, data) {
+        transaction.end()
         console.log('root duration: ', transaction.trace.root.getDurationInMillis())
         const segment = agent.tracer.getSegment()
         const cbTime = segment.getExclusiveDurationInMillis()
@@ -74,6 +75,7 @@ tap.test('cursor duration tests', function(t) {
       console.log('root duration: ', transaction.trace.root.getDurationInMillis())
 
       const data = await collection.find({}).toArray()
+      transaction.end()
       console.log('root duration: ', transaction.trace.root.getDurationInMillis())
       const segment = agent.tracer.getSegment()
       // asserts the toArray promise execution is longer than its parent
